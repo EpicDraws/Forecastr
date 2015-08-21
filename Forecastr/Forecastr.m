@@ -182,7 +182,7 @@ NSString *const kFCNearestStormBearing = @"nearestStormBearing";
                      longitude:(double)lon
                           time:(NSNumber *)time
                     exclusions:(NSArray *)exclusions
-                       success:(void (^)(id JSON))success
+                       success:(void (^)(id JSON, BOOL wasCached))success
                        failure:(void (^)(NSError *error, id response))failure
 {
   [self getForecastForLatitude:lat longitude:lon time:time exclusions:exclusions extend:nil success:success failure:failure];
@@ -193,7 +193,7 @@ NSString *const kFCNearestStormBearing = @"nearestStormBearing";
                           time:(NSNumber *)time
                     exclusions:(NSArray *)exclusions
                         extend:(NSString *)extendCommand
-                       success:(void (^)(id JSON))success
+                       success:(void (^)(id JSON, BOOL wasCached))success
                        failure:(void (^)(NSError *error, id response))failure
 {
     [self getForecastForLatitude:lat longitude:lon time:time exclusions:exclusions extend:nil language:nil success:success failure:failure];
@@ -206,7 +206,7 @@ NSString *const kFCNearestStormBearing = @"nearestStormBearing";
                     exclusions:(NSArray *)exclusions
                         extend:(NSString *)extendCommand
                       language:(NSString *)languageCode
-                       success:(void (^)(id JSON))success
+                       success:(void (^)(id JSON, BOOL wasCached))success
                        failure:(void (^)(NSError *error, id response))failure
 {
     // Check if we have an API key set
@@ -225,7 +225,7 @@ NSString *const kFCNearestStormBearing = @"nearestStormBearing";
     // If caching isn't enabled or a fresh cache item wasn't found, it will execute a server request in the failure block
     NSString *cacheKey = [self cacheKeyForURLString:urlString forLatitude:lat longitude:lon];
     [self checkForecastCacheForURLString:cacheKey success:^(id cachedForecast) {
-        success(cachedForecast);
+        success(cachedForecast, YES);
     } failure:^(NSError *error) {
         // If we got here, cache isn't enabled or we didn't find a valid/unexpired forecast
         // for this location in cache so let's query the servers for one
@@ -238,7 +238,7 @@ NSString *const kFCNearestStormBearing = @"nearestStormBearing";
                 NSString *JSONP = [[NSString alloc] initWithData:responseObject encoding:NSASCIIStringEncoding];
                 if (self.cacheEnabled) [self cacheForecast:JSONP withURLString:cacheKey];
                 [ForecastrAPIClient sharedClient].responseSerializer = [AFJSONResponseSerializer serializer];
-                success(JSONP);
+                success(JSONP, NO);
             } failure:^(NSURLSessionDataTask *task, NSError *error) {
                 NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
                 [ForecastrAPIClient sharedClient].responseSerializer = [AFJSONResponseSerializer serializer];
@@ -249,7 +249,7 @@ NSString *const kFCNearestStormBearing = @"nearestStormBearing";
             
             [[ForecastrAPIClient sharedClient] GET:urlString parameters:nil success:^(NSURLSessionDataTask *task, id JSON) {
                 if (self.cacheEnabled) [self cacheForecast:JSON withURLString:cacheKey];
-                success(JSON);
+                success(JSON, NO);
             } failure:^(NSURLSessionDataTask *task, NSError *error) {
                 NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
                 failure(error, response);

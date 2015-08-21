@@ -162,7 +162,7 @@ extern NSString *const kFCNearestStormBearing;
                      longitude:(double)lon
                           time:(NSNumber *)time
                     exclusions:(NSArray *)exclusions
-                       success:(void (^)(id JSON))success
+                       success:(void (^)(id JSON, BOOL wasCached))success
                        failure:(void (^)(NSError *error, id response))failure;
 
 /**
@@ -186,7 +186,7 @@ extern NSString *const kFCNearestStormBearing;
                           time:(NSNumber *)time
                     exclusions:(NSArray *)exclusions
                         extend:(NSString*)extendCommand
-                       success:(void (^)(id JSON))success
+                       success:(void (^)(id JSON, BOOL wasCached))success
                        failure:(void (^)(NSError *error, id response))failure;
 
 /**
@@ -212,7 +212,7 @@ extern NSString *const kFCNearestStormBearing;
                     exclusions:(NSArray *)exclusions
                         extend:(NSString *)extendCommand
                       language:(NSString *)languageCode
-                       success:(void (^)(id JSON))success
+                       success:(void (^)(id JSON, BOOL wasCached))success
                        failure:(void (^)(NSError *error, id response))failure;
 
 
