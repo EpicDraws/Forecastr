@@ -39,7 +39,7 @@
     float latitude = location.coordinate.latitude;
     float longitude = location.coordinate.longitude;
 
-    [self getForecastForLatitude:latitude longitude:longitude time:time exclusions:exclusions extend:extendCommand language:languageCode success:^(id JSON) {
+    [self getForecastForLatitude:latitude longitude:longitude time:time exclusions:exclusions extend:extendCommand language:languageCode success:^(id JSON, BOOL wasCached) {
         success(JSON, wasCached);
     } failure:^(NSError *error, id response) {
         failure(error, response);
