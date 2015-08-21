@@ -49,7 +49,7 @@
                     exclusions:(NSArray *)exclusions
                         extend:(NSString *)extendCommand
                       language:(NSString *)language
-                       success:(void (^)(id JSON))success
+                       success:(void (^)(id JSON, BOOL wasCached))success
                        failure:(void (^)(NSError *error, id response))failure;
 
 /**
@@ -71,7 +71,7 @@
                           time:(NSNumber *)time
                     exclusions:(NSArray *)exclusions
                         extend:(NSString *)extendCommand
-                       success:(void (^)(id JSON))success
+                       success:(void (^)(id JSON, BOOL wasCached))success
                        failure:(void (^)(NSError *error, id response))failure;
 
 /**
@@ -91,7 +91,7 @@
 - (void)getForecastForLocation:(CLLocation *)location
                           time:(NSNumber *)time
                     exclusions:(NSArray *)exclusions
-                       success:(void (^)(id JSON))success
+                       success:(void (^)(id JSON, BOOL wasCached))success
                        failure:(void (^)(NSError *error, id response))failure;
 
 

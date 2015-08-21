@@ -33,14 +33,14 @@
                     exclusions:(NSArray *)exclusions
                         extend:(NSString*)extendCommand
                       language:(NSString *)languageCode
-                       success:(void (^)(id JSON))success
+                       success:(void (^)(id JSON, BOOL wasCached))success
                        failure:(void (^)(NSError *error, id response))failure
 {
     float latitude = location.coordinate.latitude;
     float longitude = location.coordinate.longitude;
 
     [self getForecastForLatitude:latitude longitude:longitude time:time exclusions:exclusions extend:extendCommand language:languageCode success:^(id JSON) {
-        success(JSON);
+        success(JSON, wasCached);
     } failure:^(NSError *error, id response) {
         failure(error, response);
     }];
@@ -50,7 +50,7 @@
                           time:(NSNumber *)time
                     exclusions:(NSArray *)exclusions
                         extend:(NSString*)extendCommand
-                       success:(void (^)(id JSON))success
+                       success:(void (^)(id JSON, BOOL wasCached))success
                        failure:(void (^)(NSError *error, id response))failure
 {
     [self getForecastForLocation:location time:time exclusions:exclusions extend:extendCommand language:nil success:success failure:failure];
@@ -59,7 +59,7 @@
 - (void)getForecastForLocation:(CLLocation *)location
                           time:(NSNumber *)time
                     exclusions:(NSArray *)exclusions
-                       success:(void (^)(id JSON))success
+                       success:(void (^)(id JSON, BOOL wasCached))success
                        failure:(void (^)(NSError *error, id response))failure
 {
     [self getForecastForLocation:location time:time exclusions:exclusions extend:nil success:success failure:failure];
