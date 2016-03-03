@@ -305,4 +305,7 @@ extern NSString *const kFCNearestStormBearing;
  */
 - (void)flushCache;
 
+- (NSString *)cacheKeyForURLString:(NSString *)urlString forLatitude:(double)lat longitude:(double)lon;
+- (NSString *)urlStringforLatitude:(double)lat longitude:(double)lon time:(NSNumber *)time exclusions:(NSArray *)exclusions extend:(NSString *)extendCommand language:(NSString *)languageCode;
+
 @end
