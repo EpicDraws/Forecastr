@@ -331,9 +331,12 @@ NSString *const kFCNearestStormBearing = @"nearestStormBearing";
     NSString *urlString = [NSString stringWithFormat:@"%@/%.6f,%.6f", self.apiKey, lat, lon];
     if (time) urlString = [urlString stringByAppendingFormat:@",%.0f", [time doubleValue]];
     if (exclusions) urlString = [urlString stringByAppendingFormat:@"?exclude=%@", [self stringForExclusions:exclusions]];
-    if (extendCommand) urlString = [urlString stringByAppendingFormat:@"%@extend=%@&solar", exclusions ? @"&" : @"?", extendCommand];    if (languageCode) urlString = [urlString stringByAppendingFormat:@"%@lang=%@", (exclusions || extendCommand) ? @"&" : @"?", languageCode];
+    if (extendCommand) urlString = [urlString stringByAppendingFormat:@"%@extend=%@", exclusions ? @"&" : @"?", extendCommand];
+    if (languageCode) urlString = [urlString stringByAppendingFormat:@"%@lang=%@", (exclusions || extendCommand) ? @"&" : @"?", languageCode];
     if (self.units) urlString = [urlString stringByAppendingFormat:@"%@units=%@", (exclusions || extendCommand || languageCode) ? @"&" : @"?", self.units];
     if (self.callback) urlString = [urlString stringByAppendingFormat:@"%@callback=%@", (exclusions || self.units || extendCommand || languageCode) ? @"&" : @"?", self.callback];
+    
+    urlString = [urlString stringByAppendingFormat:@"&solar"];
     return urlString;
 }
 
