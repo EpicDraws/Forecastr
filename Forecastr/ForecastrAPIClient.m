@@ -25,7 +25,7 @@
 
 #import "ForecastrAPIClient.h"
 
-static NSString * const ForecastrAPIBaseURLString = @"https://api.forecast.io/forecast/";
+static NSString * const ForecastrAPIBaseURLString = @"https://api.darksky.net/forecast/";
 
 @implementation ForecastrAPIClient
 
